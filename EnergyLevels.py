@@ -2,6 +2,13 @@
     of classical models
 """
 
+""" Analytic energy level calculators
+
+These will return the energy associated with some
+quantum mechanical model/object.
+
+"""
+
 def HarmonicOscillator(Frequency, N):
     """ Calculate the nth energy level
         of a harmonic oscillator
@@ -25,9 +32,17 @@ def SymmetricTop(A, B, J, K, Origin=0.0):
     """
     return B * J * (J + 1) + (A - B) * K**2 + Origin
 
+""" Automated routines
+
+Loops for calculating stacks of states
+
+"""
+
 def CalculateVibrationalEnergyLevels(Frequencies, MaximumEnergy):
     """ Loop for calculating vibrational energy levels using
         a list of harmonic oscillators.
+
+        ONLY DOES FUNDAMENTAL VIBRATIONS!
     """
     EnergyLevels = []                                   # initialise bin
     for index, frequency in enumerate(Frequencies):     # loop over frequencies
@@ -52,9 +67,9 @@ def EMaxOblateTopLevels(A, B, MaximumEnergy, Origin=0.):
         J = J + 1
     return RotationalLevels
 
-def JMaxOblateTopLevels(A, B, MaxJ, MaximumEnergy, Origin=0.):
+def JMaxOblateTopLevels(A, B, MaximumJ, MaximumEnergy, Origin=0.):
     RotationalLevels = []
-    for J in xrange(MaxJ):
+    for J in xrange(MaximumJ):
         CurrentK = []
         for K in xrange(0, J):
             CurrentK = []
@@ -65,3 +80,18 @@ def JMaxOblateTopLevels(A, B, MaxJ, MaximumEnergy, Origin=0.):
                 pass
         RotationalLevels = RotationalLevels + CurrentK
     return RotationalLevels
+
+def PhaseSpaceAngularMomentum(A, B, MaximumJ, MaximumEnergy, ImpactParameter, ReducedMass, Origin=0., ParentJ=0):
+    RotationalLevels = []
+    for J in xrange(MaximumJ):
+        CurrentK = []
+        for K in xrange(0, J):
+            CurrentK = []
+            # Calculate the pure rotational energy
+            RotationalEnergy = SymmetricTop(A, B, J, K, Origin)
+            # Work out centrifugal barrier and energy; L is -J
+            CentrifugalEnergy = CentrifugalBarrier(-J, )
+                # Work out centrifugal barrier and energy
+
+def CentrifugalBarrier(OrbitalAngularMomentum, ImpactParameter, ReducedMass):
+    pass
